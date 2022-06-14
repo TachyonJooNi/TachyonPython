@@ -1,0 +1,199 @@
+# Python이 Java와 다른점
+# Python에서 만든 클래스는 변수, 메서드에 self를 사용한다.
+# Python에서는 생성자이름으로 클래스이름말고 __init__를 사용한다.
+# Java에서 @(애너테이션)을 Python에서는 데코레이터라고 한다.
+# 정적메서드(static)과 이와 비슷한 클래스메서드를 만들때 데코레이터(@staticmethod, @classmethod)를 사용한다.
+# 최근에 나오는 언어들은 멤버변수나 메서드 앞에 __(언더바)를 붙이면 private멤버가 된다.
+# Python과 최근 언어(코틀린, 다트)들은 객체 생성시 new가 없어서 카멜케이스를 잘 지켜야 객체생성시 가시성이 좋다.
+# this대신 self를 비슷하게 쓴다.
+# 맴버변수에 접근하기 위해서 self가 필요한것
+# Python에서는 멤버변수를 setter()를 이용해서 멤버변수를 self안에 넣고 해당 멤버변수를 self를 통해서...
+# ...모든 멤버메서드에서 사용하는 형태를 띈다.
+# Python은 생성자 오버로딩을 지원하지 않는다. 대신에 별도로 setter()를 통해 사용한다.
+# Python은 상속을 extend라는 별도의 키워드 대신 매개변수로 클래스이름을 넣어주면 그게 상속이 된다.
+
+"""
+인스턴스변수
+    : 메서드 안에 정의되는 변수
+    -클래스 내부에서는 self.변수명 형태로 접근한다.
+    -클래스 외부에서는 객체변수.인스턴스변수 형태로 접근한다.
+인스턴스메서드
+    : 인스턴스 변수에 항상 접근할 수 있도록 메서드의 첫번째 매개변수에
+    항상 객체 자신을 의미하는 self를 선언한다.
+"""
+
+# 클래스 선언
+from unittest import result
+
+
+class FourCalculator:
+    # setter() 메서드로 초기화를 담당한다.
+    def setdata(self, first, second):
+        # self.멤버변수 = 매개변수 형태로 기술하여 초기화 한다.
+        self.first = first
+        self.second = second
+
+    """
+    사칙연산을 수행하는 인스턴스 메서드를 정의함. 멤버변수에 접근하기 위해
+    첫번째 파라미터는 self를 반드시 사용해야 한다.
+    """
+
+    def addition(self):
+        result = self.first + self.second
+        return result
+
+    def subtraction(self):
+        result = self.first - self.second
+        return result
+
+    def multiplication(self):
+        result = self.first * self.second
+        return result
+
+    def division(self):
+        result = self.first / self.second
+        return result
+
+
+# 객체생성. 파이썬에서는 new를 사용하지 않는다.
+# 최근에 나온 언어들은 대부분 new없이 객체를 생성한다. (코틀린, 다트 등)
+a = FourCalculator()
+b = FourCalculator()
+
+# 객체 생성 후 setter()를 통해 인스턴스 변수를 초기화한다.
+# self는 함수 생성시 반드시 필요한것이므로 호출시에는 무시해야한다. (매개변수가 아님)
+a.setdata(4, 2)
+b.setdata(3, 8)
+
+# 각 객체의 인스턴스 메서드를 호출한다.
+print("객체a 덧셈", a.addition())
+print("객체a 곱셈", a.multiplication())
+print("객체b 뺄셈", b.subtraction())
+print("객체b 나눗셈", b.division())
+
+
+"""
+생성자(Initializer)
+    : 클래스로부터 객체를 생성할때 인스턴스 변수를 초기화한다.
+    init양쪽에 언더바 2개를 붙여 정의한다.
+정적메서드
+    : 클래스명으로 바로 접근할 수 있는 메서드를 말한다.
+    @staticmethod 라는 데코레이터를 사용한다.
+클래스메서드
+    : 정적메서드와 비슷한데, 객체 인스턴스를 의미하는 self대신
+    cls라는 클래스를 의미하는 파라미터를 전달받는다.
+    cls를 통해 클래스변수에 엑세스 할 수 있다.
+    @classmethod 라는 데코레이터를 사용한다.
+클래스변수
+    : 클래스 전체에서 접근가능한 전역변수를 말한다.
+"""
+
+
+class CalculatorInit:
+
+    # 클래스 변수 생성
+    count = 0
+
+    """
+    파이썬에서는 Java와 같이 생성자 오버로딩은 지원하지 않는다.
+    def __init__(self):
+        self.first = 1
+        self.second = 2
+    """
+
+    # 생성자 메서드 정의. 멤버변수 초기화를 위해 첫번째 파라미터는 self를 기술한다.(필수)
+    def __init__(self, first, second):
+        # 인스턴스 변수 생성
+        self.first = first
+        self.second = second
+        # 생성자에서 클래스이름으로 클래스변수 접근 가능
+        CalculatorInit.count += 1
+
+    # 일반적인 인스턴스 메서드 정의
+    def addition(self):
+        # 인스턴스 변수에 접근하기 위해 self가 필수적이다.
+        result = self.first + self.second
+        return result
+
+    """
+    @staticmethod 데코레이터를 통해 정적메서드로 정의한다.
+    정적메서드는 객체생성없이 클래스명으로 직접 호출할 수 있다.
+    """
+
+    @staticmethod
+    def staticArea(pFirst, pSecond):
+        result = pFirst * pSecond
+        print("static메서드", result)
+
+    # 클래스메서드 정의. cls를 통해 클래스변수에 접근할 수 있다.
+    @classmethod
+    def showinfo(cls):
+        print("class메서드", cls.count)
+
+
+# fCal = CalculatorInit() -> 인자가 없는 기본생성자는 정의되지 않았으므로 실행시 에러발생.
+# 2개의 인수를 전달해서 객체를 생성함.
+fCal = CalculatorInit(2010, 43)
+# 일반적인 인스턴스 메서드 호출
+print(fCal.addition())
+# 클래스 메서드 호출 1 : 인스턴스 변수를 통해 호출한다. (권장사항 X )
+fCal.showinfo()
+# 클래스메서드 호출 2 : 클래스명을 통해 호출한다. (권장함)
+CalculatorInit.showinfo()
+# 정적메서드 호출 : 클래스명을 통해 직접 호출한다.
+CalculatorInit.staticArea(5, 8)
+
+# 상속 : 파이썬에서는 별도의 키워드없이 클래스 정의시 매개변수 형태로 상속한다.
+class moreCalulator(CalculatorInit):
+    # 자식쪽에서 확장한 인스턴스 메서드
+    def pow(self):
+        # first를 second만큼 거듭제곱하여 반환한다.
+        result = self.first**self.second
+        return result
+
+    # 오버라이딩 : 부모의 기능을 자식쪽에서 재정의한 메서드.
+    def addition(self):
+        # 덧셈 후 2를 곱하여 반환한다.
+        return (self.first + self.second) * 2
+
+
+# 객체생성 및 메서드 호출
+moreCal = moreCalulator(4, 3)
+# 4의 3승의 결과를 출력한다.
+print("상속후", moreCal.pow())
+
+# 부모클래스와 자식클래스를 통해 각각 객체를 생성함
+p1 = CalculatorInit(100, 200)
+p2 = moreCalulator(100, 200)
+# 부모의 메서드는 단순히 합의 결과를 반환한다.
+print("부모객체로호출", p1.addition())  # 결과 : 300
+# 자식의 메서드는 합의결과에 2를 곱해 반환한다.
+print("자식객체로호출", p2.addition())  # 결과 : 600
+# 즉, 오버라이딩 된 메서드이므로 호출한 객체에 따라 다른 결과가 출력된다.
+
+
+# 정보은닉 : 인스턴스 변수를 비공개속성(private)으로 설정할 수 있다.
+class Person:
+    # 생성자 메서드 정의
+    def __init__(self, n, a, pw):
+        # 언더바가 없으면 public 변수가 된다.
+        self.name = n
+        self.age = a
+        # 언더바를 앞에 2개를 붙여주면 private 변수가 된다.
+        self.__passwd = pw
+
+    # getter() 역할의 메서드로 private 멤버변수를 반환하는 역할을 한다.
+    def secret_info(self):
+        return self.__passwd
+
+
+# 객체생성 및 초기화
+p1 = Person("my", 22, "qwer1234")
+# public 멤버는 즉시 출력할 수 있다.
+print("이름", p1.name)
+print("나이", p1.age)
+# private 멤버는 클래스 외부에서는 접근할 수 없으므로 에러가 발생한다.
+# print("비밀번호1", p1.__passwd) => 컴파일에러는 발생하지 않고, 실행하면 에러발생(런타임에러)
+# print("비밀번호2", p1.passwd) => 이런 변수가 없으므로 에러발생
+# private 변수는 메서드를 통해 간접적으로 접근하여 출력한다.
+print("비밀번호", p1.secret_info())
