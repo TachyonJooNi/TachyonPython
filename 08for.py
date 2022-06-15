@@ -1,4 +1,6 @@
 """
+파일명 : 08for.py
+
 for문
     형식]
         for 반복변수 in 목록형:
@@ -13,7 +15,6 @@ for문
 """
 # 0~4까지 반복한다.
 from math import remainder
-
 
 for i in range(5):
     print("i=", i, end=" ")

@@ -19,3 +19,12 @@ for i in range(5, 0, -1):
         else:
             print(" ", end="")
     print()
+
+# 선생님 풀이
+for j in range(5):
+    for i in range(4 - j):
+        print(" ", end="")
+    # for i in range((2 * j) + 1):
+    for i in range(2 * (j + 1) - 1):
+        print("*", end="")
+    print()

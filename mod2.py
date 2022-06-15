@@ -1,3 +1,4 @@
+# 파일명 : mod2.py
 # 곱셈, 나눗셈을 위한 함수 선언
 def mul(a, b):
     return a * b
