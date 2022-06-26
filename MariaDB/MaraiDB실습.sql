@@ -27,7 +27,7 @@ CREATE TABLE tb_int (
 	num4 BIGINT ,
 	
 	fnum1 FLOAT(10,5) NOT NULL,
-	fuum2 DOUBLE(20,10)
+	fnum2 DOUBLE(20,10)
 );
 /*
 AUTO_INCREMENT : 테이블 생성시 자동증가 컬럼으로 지정할때 사용하는 제약조건.
@@ -142,7 +142,7 @@ SELECT * FROM tb_spec;
 #앞에서 본것과 같이 DML문은 오라클과 동일하다.
 SELECT * FROM tb_string;
 
-INSERT INTO tb_string (str1, str2) VALUES ('오라클이랑..', '동일하네요*^^*');
+INSERT INTO tb_string (str1, strboardmvcboard2) VALUES ('오라클이랑..', '동일하네요*^^*');
 SELECT * FROM tb_string;
 
 UPDATE tb_string SET str1='내용수정됨' WHERE idx=1;
@@ -245,13 +245,25 @@ SELECT COUNT(*) FROM mvcboard WHERE title LIKE '%제목2%';
 # 게시물은 항상 입력된 시간의 내림차순으로 정렬한다.
 SELECT * FROM mvcboard ORDER BY idx DESC;
 
+/*
+   오라클에서는 rownum을 통해 게시물의 구간을 결정하지만
+   MySQL에서는 limit를 통해 결정.
+   형식]
+      select ....... limit 시작인덱스, 가져올게시물수;
+*/
+
 # 게시물 페이징 처리하기
 # 1페이지의 게시물
-SELECT * FROM mvcboard ORDER BY idx DESC LIMIT 0, 3;
+SELECT * FROM mvcboard ORDER BY idx DESC LIMIT 0, 2;
 # 2페이지의 게시물
-SELECT * FROM mvcboard ORDER BY idx DESC LIMIT 3, 3;
+SELECT * FROM mvcboard ORDER BY idx DESC LIMIT 2, 2;
+SELECT * FROM mvcboard ORDER BY idx DESC LIMIT 4, 2;
 
-
+# 게시물 상세보기
+#1.조회수 증가하기
+UPDATE mvcboard SET visitcount=visitcount+1 WHERE idx=1;
+#2.게시물 조회하기
+SELECT * FROM mvcboard WHERE idx=1;
 
 /*********************************
 Model1 연습
