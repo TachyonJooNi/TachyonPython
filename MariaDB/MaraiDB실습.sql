@@ -253,8 +253,18 @@ SELECT * FROM mvcboard ORDER BY idx DESC LIMIT 3, 3;
 
 
 
+/*********************************
+Model1 연습
+**********************************/
+create table member (
+    id varchar(10) not null,
+    pass varchar(10) not null,
+    name varchar(30) not null,
+    regidate DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (id)
+);
 
-
+insert into member (id, pass, name) values ('musthave', '1234', '머스트member해브');
 
 
 
